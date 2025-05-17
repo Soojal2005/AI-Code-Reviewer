@@ -1,0 +1,204 @@
+/* *{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html, body , #root{
+  height: 100%;
+  width: 100%;
+}
+main{
+  display: flex;
+  gap: 6px;
+  height: 100%;
+  padding: 1.5rem;
+  width: 100%;
+}
+main .left,main .right{
+  height : 100%;
+  flex-basis: 50%;
+  border-radius: 0.7rem;
+}
+main .left{
+  background-color: black;
+  position: relative;
+}
+main .left #rev{
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: rgb(106, 106, 163);
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.7rem;
+  cursor: pointer;
+
+}
+main .right{
+  background-color: #504b4b;
+  overflow: auto;
+}
+#rev :hover{
+  border: 2px solid rgb(195, 72, 72);
+}
+main .left #code , #code pre{
+height: 100%;
+  width: 100%;
+ margin: 0; 
+ background-color: #201919;
+ border-radius: 0.7rem;
+
+}
+*/
+
+
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Fira Code', monospace, system-ui, -apple-system;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  background-color: #1e1e1e;
+}
+
+main {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  padding: 1.5rem;
+  width: 100%;
+  background-color: #252526;
+}
+
+/* Editor Panel */
+main .left {
+  height: 100%;
+  flex: 1;
+  border-radius: 8px;
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Output Panel */
+main .right {
+  flex: 1;
+  border-radius: 8px;
+  background-color: #9e9ad8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  color: #1c1414;
+  overflow: auto;
+}
+
+/* Code Container */
+#code {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow: auto;
+  background-color: #1e1e1e;
+}
+
+#code pre {
+  height: 100%;
+  margin: 0;
+  background: transparent !important;
+}
+
+/* Review Button */
+#rev {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #007acc;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  border: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#rev:hover {
+  background-color: #0062a3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 122, 204, 0.3);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #252526;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3e3e42;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #007acc;
+}
+
+/* Prism.js Theme Overrides */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6a9955;
+}
+
+.token.punctuation {
+  color: #d4d4d4;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #b5cea8;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #ce9178;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #d4d4d4;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #569cd6;
+}
+
+.token.function,
+.token.class-name {
+  color: #dcdcaa;
+}

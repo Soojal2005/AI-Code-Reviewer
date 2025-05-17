@@ -1,0 +1,12 @@
+# Ignore .env files
+.env
+*.env
+
+# Ignore environment configs
+env/
+.env.local
+.env.*.local
+node_modules/
+
+# System files
+.DS_Store
