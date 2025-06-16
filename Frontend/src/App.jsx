@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from 'react'
 import './App.css'
 import Prism from 'prismjs'
@@ -14,21 +12,29 @@ import "highlight.js/styles/github-dark.css";
 function App() {
   const [code, setCode] = useState(`function App() {\n  return 1 + 1;\n}`);
   const [response, setResponse] = useState('');
+  const [loading, setLoading] = useState(false); // Added loading state
 
   useEffect(() => {
     Prism.highlightAll();
   }, [])
   
   async function reviewCode() {
-    const response = await axios.post(' https://render.com/docs/web-services#port-binding/ai/ask-ai', { code })
-    setResponse(response.data);
+    setLoading(true); // Start loader
+    try {
+      const response = await axios.post('https://render.com/docs/web-services#port-binding/ai/ask-ai', { code })
+      setResponse(response.data);
+    } catch (err) {
+      setResponse("Error fetching data");
+    } finally {
+      setLoading(false); // Stop loader
+    }
   }
 
   return (
     <main style={{ 
       display: 'flex', 
       height: '100vh',
-      overflow: 'hidden', // Prevents main container from scrolling
+      overflow: 'hidden',
       margin: 0
     }}>
       {/* Left Panel - Editor */}
@@ -38,11 +44,11 @@ function App() {
         flexDirection: 'column',
         padding: '20px',
         background: '#1e1e1e',
-        overflow: 'hidden' // Contains editor and button
+        overflow: 'hidden'
       }}> 
         <div style={{
           flex: 1,
-          overflow: 'auto', // Allows scrolling within editor
+          overflow: 'auto',
           marginBottom: '10px'
         }}>
           <Editor
@@ -55,11 +61,11 @@ function App() {
               fontSize: 14,
               backgroundColor: '#1e1e1e',
               color: '#d4d4d4',
-              minHeight: '100%', // Fills available space
+              minHeight: '100%',
               border: '1px solid #444',
               borderRadius: '6px',
               lineHeight: '1.6',
-              boxSizing: 'border-box' // Ensures padding is included in height
+              boxSizing: 'border-box'
             }}
           />
         </div>
@@ -74,7 +80,7 @@ function App() {
             cursor: 'pointer',
             fontFamily: '"Fira Code", monospace',
             fontSize: '14px',
-            flexShrink: 0 // Prevents button from being squished
+            flexShrink: 0
           }}
         >
           Review Code
@@ -87,41 +93,51 @@ function App() {
         padding: '20px',
         background: '#1e1e1e',
         color: '#d4d4d4',
-        overflow: 'auto', // Allows scrolling for content
+        overflow: 'auto',
         borderLeft: '1px solid #444',
         boxSizing: 'border-box'
       }}>
-        <Markdown 
-          rehypePlugins={[rehypeHighlight]}
-          components={{
-            pre({node, children, ...props}) {
-              return <pre style={{
-                background: '#1e1e1e',
-                padding: '16px',
-                borderRadius: '6px',
-                overflow: 'auto',
-                border: '1px solid #444',
-                margin: '16px 0',
-                lineHeight: '1.6',
-                maxWidth: '100%',
-                boxSizing: 'border-box'
-              }} {...props}>{children}</pre>
-            },
-            code({node, inline, className, children, ...props}) {
-              return <code style={{
-                fontFamily: '"Fira Code", monospace',
-                fontSize: '14px',
-                background: inline ? '#2d2d2d' : 'transparent',
-                padding: inline ? '3px 5px' : '0',
-                borderRadius: inline ? '4px' : '0',
-                lineHeight: '1.6',
-                wordBreak: 'break-word'
-              }} {...props}>{children}</code>
-            }
-          }}
-        >
-          {response}
-        </Markdown>
+        {
+          loading ? (
+            <p style={{
+              fontFamily: '"Fira Code", monospace',
+              fontSize: '16px',
+              color: '#aaa'
+            }}>⏳ Loading...</p>
+          ) : (
+            <Markdown 
+              rehypePlugins={[rehypeHighlight]}
+              components={{
+                pre({node, children, ...props}) {
+                  return <pre style={{
+                    background: '#1e1e1e',
+                    padding: '16px',
+                    borderRadius: '6px',
+                    overflow: 'auto',
+                    border: '1px solid #444',
+                    margin: '16px 0',
+                    lineHeight: '1.6',
+                    maxWidth: '100%',
+                    boxSizing: 'border-box'
+                  }} {...props}>{children}</pre>
+                },
+                code({node, inline, className, children, ...props}) {
+                  return <code style={{
+                    fontFamily: '"Fira Code", monospace',
+                    fontSize: '14px',
+                    background: inline ? '#2d2d2d' : 'transparent',
+                    padding: inline ? '3px 5px' : '0',
+                    borderRadius: inline ? '4px' : '0',
+                    lineHeight: '1.6',
+                    wordBreak: 'break-word'
+                  }} {...props}>{children}</code>
+                }
+              }}
+            >
+              {response}
+            </Markdown>
+          )
+        }
       </div>
     </main>
   )
