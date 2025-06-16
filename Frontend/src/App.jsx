@@ -20,7 +20,7 @@ function App() {
   }, [])
   
   async function reviewCode() {
-    const response = await axios.post(' https://render.com/docs/web-services#port-binding', { code })
+    const response = await axios.post(' https://render.com/docs/web-services#port-binding/ask-ai', { code })
     setResponse(response.data);
   }
 
